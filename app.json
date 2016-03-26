@@ -1,0 +1,24 @@
+{
+  "name": "Sabayon",
+  "description": "Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku apps.",
+  "website": "https://github.com/dmathieu/sabayon",
+  "repository": "https://github.com/dmathieu/sabayon",
+  "env": {
+    "ACME_DOMAIN": {
+      "description": "The domain you wish to generate the certificate for"
+    },
+    "ACME_EMAIL": {
+      "description": "Your email address"
+    },
+    "ACME_APP_NAME": {
+      "description": "The heroku app you wish to add the certificate to"
+    },
+    "HEROKU_TOKEN": {
+      "description": "An heroku access token allowed to write config vars and SSL certificates on ACME_APP_NAME"
+    }
+  },
+  "addons": ["scheduler"],
+  "buildpacks": [
+    {"url": "heroku/go"}
+  ]
+}

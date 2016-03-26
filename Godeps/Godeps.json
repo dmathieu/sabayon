@@ -1,0 +1,65 @@
+{
+	"ImportPath": "github.com/dmathieu/sabayon",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v60",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/cli",
+			"Comment": "1.2.0-187-gc31a797",
+			"Rev": "c31a7975863e7810c92e2e288a9ab074f9a88f29"
+		},
+		{
+			"ImportPath": "github.com/davecgh/go-spew/spew",
+			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
+		},
+		{
+			"ImportPath": "github.com/joho/godotenv",
+			"Comment": "v1-10-g4ed1339",
+			"Rev": "4ed13390c0acd2ff4e371e64d8b97c8954138243"
+		},
+		{
+			"ImportPath": "github.com/miekg/dns",
+			"Rev": "7e024ce8ce18b21b475ac6baf8fa3c42536bf2fa"
+		},
+		{
+			"ImportPath": "github.com/pmezard/go-difflib/difflib",
+			"Rev": "e8554b8641db39598be7f6342874b958f12ae1d4"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Comment": "v1.0-88-ge3a8ff8",
+			"Rev": "e3a8ff8ce36581f87a15341206f205b1da467059"
+		},
+		{
+			"ImportPath": "github.com/xenolf/lego/acme",
+			"Comment": "v0.3.0-34-gca19a90",
+			"Rev": "ca19a90028e242e878585941c2a27c8f3b3efc25"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ocsp",
+			"Rev": "9e7f5dc375abeb9619ea3c5c58502c428f457aa2"
+		},
+		{
+			"ImportPath": "golang.org/x/net/publicsuffix",
+			"Rev": "c4bb2f7b3d65038072e1e637027388ba2379f1bf"
+		},
+		{
+			"ImportPath": "gopkg.in/square/go-jose.v1",
+			"Comment": "v1.0.1",
+			"Rev": "40d457b439244b546f023d056628e5184136899b"
+		},
+		{
+			"ImportPath": "gopkg.in/square/go-jose.v1/cipher",
+			"Comment": "v1.0.1",
+			"Rev": "40d457b439244b546f023d056628e5184136899b"
+		},
+		{
+			"ImportPath": "gopkg.in/square/go-jose.v1/json",
+			"Comment": "v1.0.1",
+			"Rev": "40d457b439244b546f023d056628e5184136899b"
+		}
+	]
+}
