@@ -14,28 +14,43 @@ import (
 func main() {
 	godotenv.Load()
 
-	var requiredDay string
-	flag.StringVar(&requiredDay, "dat", "", "")
+	var force bool
+	flag.BoolVar(&force, "force", false, "Force updating the certificate even if it's not about to expire")
 	flag.Parse()
-	t := time.Now()
-	currentDay := t.Weekday().String()
-
-	if requiredDay != "" && requiredDay != currentDay {
-		log.Printf("cert.day_ignore required=%s current=%s", requiredDay, currentDay)
-		return
-	}
 
 	var domain = os.Getenv("ACME_DOMAIN")
 	var email = os.Getenv("ACME_EMAIL")
 	var token = os.Getenv("HEROKU_TOKEN")
 	var appName = os.Getenv("ACME_APP_NAME")
 
+	herokuClient := heroku.NewClient(nil, token)
+	certificates, err := herokuClient.GetSSLCertificates(appName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if len(certificates) > 1 {
+		log.Fatalf("Found %d certificate. Can only update one. Nothing done.", len(certificates))
+	}
+
+	if !force {
+		certExpiration, err := time.Parse(time.RFC3339, certificates[0].SslCert.ExpiresAt)
+		if err != nil {
+			log.Fatal(err)
+		}
+		now := time.Now()
+		m := now.AddDate(0, +1, 0)
+
+		if certExpiration.After(m) {
+			log.Printf("cert.ignore_update expires_at=\"%s\" renew_at=\"%s\"", certExpiration, m)
+			return
+		}
+	}
+
 	log.Printf("cert.create email='%s' domain='%s'", email, domain)
 
 	ce := certs.NewCert(email, domain)
 	go ce.Create()
-
-	herokuClient := heroku.NewClient(nil, token)
 
 	for {
 		select {
@@ -59,16 +74,7 @@ func main() {
 		case r := <-ce.CertChan:
 			log.Printf("cert.created")
 
-			certs, err := herokuClient.GetSSLCertificates(appName)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			if len(certs) > 1 {
-				log.Fatalf("Found %d certificate. Can only update one. Nothing done.", len(certs))
-			}
-
-			if len(certs) == 0 {
+			if len(certificates) == 0 {
 				err = herokuClient.SetSSLCertificate(appName, r.Certificate, r.PrivateKey)
 				if err != nil {
 					log.Fatal(err)
@@ -76,7 +82,7 @@ func main() {
 
 				log.Printf("cert.added")
 			} else {
-				err = herokuClient.UpdateSSLCertificate(appName, certs[0].Name, r.Certificate, r.PrivateKey)
+				err = herokuClient.UpdateSSLCertificate(appName, certificates[0].Name, r.Certificate, r.PrivateKey)
 				if err != nil {
 					log.Fatal(err)
 				}

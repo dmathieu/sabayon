@@ -66,4 +66,4 @@ You can then generate your first certificate with the following command:
 Open the [scheduler add-on](https://elements.heroku.com/addons/scheduler) provisioned,
 and add the following daily command to regenerate your certificate every week:
 
-    sabayon setup -d Sunday
+    sabayon setup

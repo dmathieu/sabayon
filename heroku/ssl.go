@@ -1,10 +1,17 @@
 package heroku
 
-import "fmt"
+import (
+	"fmt"
+)
+
+type sslCert struct {
+	ExpiresAt string `json:"expires_at"`
+}
 
 // Certificate is the information of a single certificate
 type Certificate struct {
-	Name string `json:"name"`
+	Name    string  `json:"name"`
+	SslCert sslCert `json:"ssl_cert"`
 }
 
 // SetSSLCertificate adds a certificate to an app
