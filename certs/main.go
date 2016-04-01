@@ -23,7 +23,7 @@ func NewCert(email string, domain string) *Cert {
 	return &Cert{
 		Email:         email,
 		Domain:        domain,
-		AcmeServer:    acmeStagingServer,
+		AcmeServer:    acmeProdServer,
 		CertChan:      make(chan acme.CertificateResource),
 		ComChan:       make(chan string),
 		ChallengeChan: make(chan *ChallengeParams),
