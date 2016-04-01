@@ -2,6 +2,8 @@
 
 Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku apps.
 
+![architecture](architecture.png)
+
 ## Setup
 
 First, you need to let your main app validate the Letsencrypt challenge.
@@ -51,6 +53,9 @@ Add the following rack middleware to your app:
 
 ### Other
 
+In any other language, you need to be able to respond to requests on the path `/.well-known/acme-challenge/$ACME_TOKEN`
+with `$ACME_KEY` as the content.
+
 Please add any other language/framework by openin a Pull Request.
 
 ### Deploy the sabayon app
@@ -61,9 +66,9 @@ Click on this button deploy and fill all the required config vars.
 
 You can then generate your first certificate with the following command:
 
-    heroku run sabayon setup
+    heroku run sabayon
 
 Open the [scheduler add-on](https://elements.heroku.com/addons/scheduler) provisioned,
 and add the following daily command to regenerate your certificate every week:
 
-    sabayon setup
+    sabayon
