@@ -72,3 +72,9 @@ Open the [scheduler add-on](https://elements.heroku.com/addons/scheduler) provis
 and add the following daily command to regenerate your certificate automatically one month before it expires:
 
     sabayon
+
+### Force-reload a certificate
+
+You can force-reload your app's certificate:
+
+    heroku run sabayon --force
