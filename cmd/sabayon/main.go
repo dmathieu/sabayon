@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/dmathieu/sabayon/certs"
@@ -18,7 +19,7 @@ func main() {
 	flag.BoolVar(&force, "force", false, "Force updating the certificate even if it's not about to expire")
 	flag.Parse()
 
-	var domain = os.Getenv("ACME_DOMAIN")
+	var domains = strings.Split(os.Getenv("ACME_DOMAIN"), ",")
 	var email = os.Getenv("ACME_EMAIL")
 	var token = os.Getenv("HEROKU_TOKEN")
 	var appName = os.Getenv("ACME_APP_NAME")
@@ -47,9 +48,9 @@ func main() {
 		}
 	}
 
-	log.Printf("cert.create email='%s' domain='%s'", email, domain)
+	log.Printf("cert.create email='%s' domains='%s'", email, domains)
 
-	ce := certs.NewCert(email, domain)
+	ce := certs.NewCert(email, domains)
 	go ce.Create()
 
 	for {

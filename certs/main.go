@@ -10,7 +10,7 @@ const (
 // Cert allow creation and renewal of certs
 type Cert struct {
 	Email         string
-	Domain        string
+	Domains       []string
 	AcmeServer    string
 	CertChan      chan acme.CertificateResource
 	ComChan       chan string
@@ -19,10 +19,10 @@ type Cert struct {
 }
 
 // NewCert creates a new Cert struct
-func NewCert(email string, domain string) *Cert {
+func NewCert(email string, domains []string) *Cert {
 	return &Cert{
 		Email:         email,
-		Domain:        domain,
+		Domains:       domains,
 		AcmeServer:    acmeProdServer,
 		CertChan:      make(chan acme.CertificateResource),
 		ComChan:       make(chan string),
