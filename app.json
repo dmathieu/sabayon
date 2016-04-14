@@ -5,7 +5,7 @@
   "repository": "https://github.com/dmathieu/sabayon",
   "env": {
     "ACME_DOMAIN": {
-      "description": "The domain you wish to generate the certificate for"
+      "description": "The domains, separated by a comma you wish to generate the certificate for"
     },
     "ACME_EMAIL": {
       "description": "Your email address"
