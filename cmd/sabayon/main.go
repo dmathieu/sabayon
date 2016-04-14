@@ -60,8 +60,14 @@ func main() {
 			return
 		case r := <-ce.ChallengeChan:
 			log.Printf("cert.validate")
+			var index int
+			for i, v := range domains {
+				if v == r.Domain {
+					index = i + 1
+				}
+			}
 
-			err := herokuClient.SetConfigVars(appName, r.KeyAuth, r.Token)
+			err := herokuClient.SetConfigVars(appName, index, r.KeyAuth, r.Token)
 			if err != nil {
 				log.Fatal(err)
 			}

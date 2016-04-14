@@ -17,13 +17,27 @@ Change the `web` process type in your Procfile:
 
 Add a bin/start file to your app:
 
-    #!/bin/bash -e
+    #!/usr/bin/env ruby
+    data = []
+    if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
+      data << {key: ENV['ACME_KEY'], token: ENV['ACME_TOKEN']}
+    else
+      ENV.each do |k, v|
+        if d = k.match(/^ACME_KEY_([0-9]+)/)
+          index = d[1]
 
-    if [[ -n $ACME_KEY && -n $ACME_TOKEN ]]; then
-      mkdir -p dist/.well-known/acme-challenge
-      echo $ACME_KEY > dist/.well-known/acme-challenge/$ACME_TOKEN
-    fi
-    bin/boot
+          data << {key: v, token: ENV["ACME_TOKEN_#{index}"]}
+        end
+      end
+    end
+
+    `mkdir -p dist/.well-known/acme-challenge`
+    data.each do |e|
+      `echo #{e[:key]} > dist/.well-known/acme-challenge/#{e[:token]}`
+    end
+
+    `bin/boot`
+
 
 Make that file executable:
 
@@ -41,12 +55,25 @@ Add the following rack middleware to your app:
           @app = app
         end
 
-        def call(env)
-          if env["PATH_INFO"] == "/.well-known/acme-challenge/#{ENV['ACME_TOKEN']}"
-            [200, {"Content-Type" => "text/plain"}, [ENV['ACME_KEY']]]
+        def calldata = []
+          if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
+            data << {key: ENV['ACME_KEY'], token: ENV['ACME_TOKEN']}
           else
-            @app.call(env)
+            ENV.each do |k, v|
+              if d = k.match(/^ACME_KEY_([0-9]+)/)
+              index = d[1]
+
+              data << {key: v, token: ENV["ACME_TOKEN_#{index}"]}
+            end
           end
+
+          data.each do |e|
+            if env["PATH_INFO"] == "/.well-known/acme-challenge/#{e[:token]}"
+              return [200, {"Content-Type" => "text/plain"}, [e[:key]]]
+            end
+          end
+
+          @app.call(env)
         end
       end
     end
