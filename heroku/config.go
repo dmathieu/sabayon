@@ -13,11 +13,9 @@ func (s *Client) SetConfigVars(appName string, index int, key, token string) err
 		tokenConfig = fmt.Sprintf("ACME_TOKEN_%d", index)
 	}
 
-	var body = fmt.Sprintf(
-		"{\"%s\": \"%s\",\"%s\": \"%s\"}",
-		keyConfig, key,
-		tokenConfig, token,
-	)
+	var body = make(map[string]string)
+	body[keyConfig] = key
+	body[tokenConfig] = token
 
 	var res struct{}
 	return s.Patch(&res, fmt.Sprintf("/apps/%s/config-vars", appName), body)

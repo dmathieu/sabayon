@@ -34,6 +34,5 @@ func (c *challengeProvider) Present(domain, token, keyAuth string) error {
 }
 
 func (c *challengeProvider) CleanUp(domain, token, keyAuth string) error {
-
 	return nil
 }

@@ -73,11 +73,9 @@ func main() {
 			}
 
 			// Wait for a few seconds so the app can restart
-			time.Sleep(5 * time.Second)
+			time.Sleep(20 * time.Second)
 
 			ce.ComChan <- "validate"
-		case r := <-ce.ComChan:
-			log.Printf("cert.com msg=%s", r)
 		case r := <-ce.CertChan:
 			log.Printf("cert.created")
 
