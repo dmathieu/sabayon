@@ -55,7 +55,7 @@ Add the following rack middleware to your app:
           @app = app
         end
 
-        def call
+        def call(env)
           data = []
           if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
             data << {key: ENV['ACME_KEY'], token: ENV['ACME_TOKEN']}
