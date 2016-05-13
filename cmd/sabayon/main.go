@@ -34,7 +34,7 @@ func main() {
 		log.Fatalf("Found %d certificate. Can only update one. Nothing done.", len(certificates))
 	}
 
-	if !force {
+	if len(certificates) != 0 && !force {
 		certExpiration, err := time.Parse(time.RFC3339, certificates[0].SslCert.ExpiresAt)
 		if err != nil {
 			log.Fatal(err)
