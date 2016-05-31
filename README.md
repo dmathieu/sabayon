@@ -4,18 +4,32 @@ Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku
 
 ![architecture](architecture.png)
 
+
 ## Setup
 
-First, you need to let your main app validate the Letsencrypt challenge.
+There are two parts to the setup:
+
+1. Your appplications setup
+1. Creating a new sabayon app
+
+## Configuring your application
+
+In step 5 (above) ACME calls a specific, unique URL on your application that
+allows ownership to be validated. This URL is based upon
+[config vars](https://devcenter.heroku.com/articles/config-vars) set by
+the sabayon app (both during initial create and on an ongoing basis).
+
+There are a couple options to read the config vars and automagically create
+the appropriate URL endpoint.
 
 ### Static apps
 
 For a [static app](https://github.com/heroku/heroku-buildpack-static)
-Change the `web` process type in your Procfile:
+change the `web` process type in your Procfile:
 
     web: bin/start
 
-Add a bin/start file to your app:
+Add a `bin/start` file to your app:
 
     #!/usr/bin/env ruby
     data = []
@@ -38,12 +52,36 @@ Add a bin/start file to your app:
 
     `bin/boot`
 
-
 Make that file executable:
 
     chmod +x bin/start
 
-Deploy your main app with those changes.
+Commit this code then deploy your main app with those changes.
+
+### Rails Applications
+
+Add a route to handle the request. Based on [schneems](https://github.com/schneems)'s [codetriage](https://github.com/codetriage)
+[commit](https://github.com/codetriage/codetriage/blob/bf86f24afc017f4d90f42deab525c99b7969e99e/config/routes.rb#L5-L9).
+
+There is also a rack example next if you would rather handle this in rack or
+if you have a non-rails app.
+
+```ruby
+
+YourAppName::Application.routes.draw do
+
+  if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
+    get ".well-known/acme-challenge/#{ ENV["ACME_TOKEN"] }" => proc { [200, {}, [ ENV["ACME_KEY"] ] ] }
+  else 
+    ENV.each do |var, _|
+      next unless var.start_with?("ACME_TOKEN_")
+      number = var.sub(/ACME_TOKEN_/, '')
+      get ".well-known/acme-challenge/#{ ENV["ACME_TOKEN_#{number}"] }" => proc { [200, {}, [ ENV["ACME_KEY_#{number}"] ] ] }
+    end
+  end
+end
+
+```
 
 ### Ruby apps
 
@@ -79,20 +117,26 @@ Add the following rack middleware to your app:
       end
     end
 
-### Other
+### Other HTTP implementations
 
 In any other language, you need to be able to respond to requests on the path `/.well-known/acme-challenge/$ACME_TOKEN`
 with `$ACME_KEY` as the content.
 
-Please add any other language/framework by openin a Pull Request.
+Please add any other language/framework by opening a Pull Request.
 
-### Deploy the sabayon app
+## Creating and deploy the sabayon app
 
-Click on this button deploy and fill all the required config vars.
+In addition to configuring your application, you will also need to create
+a new Heroku application which will run sabayon to create and update
+the certificates for your main application.
+
+To easily create a new Heroku applicaiton with the sabayon code,
+Click on this deploy button and fill all the required config vars.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-You can then generate your first certificate with the following command:
+You can then generate your first certificate with the following command (this will add configuration to your main
+application and restart it as well).
 
     heroku run sabayon
 
