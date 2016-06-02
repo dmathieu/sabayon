@@ -25,6 +25,9 @@ func main() {
 	var token = os.Getenv("HEROKU_TOKEN")
 	var appName = os.Getenv("ACME_APP_NAME")
 	wait, _ := strconv.Atoi(os.Getenv("SABAYON_WAIT"))
+	if wait == 0 {
+		wait = 20
+	}
 
 	herokuClient := heroku.NewClient(nil, token)
 	certificates, err := herokuClient.GetSSLCertificates(appName)
