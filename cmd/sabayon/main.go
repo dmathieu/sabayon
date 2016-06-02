@@ -24,7 +24,7 @@ func main() {
 	var email = os.Getenv("ACME_EMAIL")
 	var token = os.Getenv("HEROKU_TOKEN")
 	var appName = os.Getenv("ACME_APP_NAME")
-	wait, _ := strconv.Atoi(os.Getenv("SABAYON_WAIT"))
+	wait, _ := strconv.Atoi(os.Getenv("RESTART_WAIT_TIME"))
 	if wait == 0 {
 		wait = 20
 	}

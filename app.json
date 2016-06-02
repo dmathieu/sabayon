@@ -16,7 +16,7 @@
     "HEROKU_TOKEN": {
       "description": "An heroku access token allowed to write config vars and SSL certificates on ACME_APP_NAME"
     },
-    "SABAYON_WAIT": {
+    "RESTART_WAIT_TIME": {
       "description": "Seconds to wait for ACME_APP_NAME to restart before completing verification. Long restarts will lead to H12 errors for your app but this may be useful to adjust when using preboot.",
       "value": "20"
     }
