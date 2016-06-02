@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -23,6 +24,10 @@ func main() {
 	var email = os.Getenv("ACME_EMAIL")
 	var token = os.Getenv("HEROKU_TOKEN")
 	var appName = os.Getenv("ACME_APP_NAME")
+	wait, _ := strconv.Atoi(os.Getenv("RESTART_WAIT_TIME"))
+	if wait == 0 {
+		wait = 20
+	}
 
 	herokuClient := heroku.NewClient(nil, token)
 	certificates, err := herokuClient.GetSSLCertificates(appName)
@@ -73,7 +78,7 @@ func main() {
 			}
 
 			// Wait for a few seconds so the app can restart
-			time.Sleep(20 * time.Second)
+			time.Sleep(time.Duration(wait) * time.Second)
 
 			ce.ComChan <- "validate"
 		case r := <-ce.CertChan:
