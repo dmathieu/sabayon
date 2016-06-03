@@ -21,6 +21,10 @@ func main() {
 	flag.Parse()
 
 	var domains = strings.Split(os.Getenv("ACME_DOMAIN"), ",")
+	// trim potential whitespace
+	for i, domain := range domains {
+		domains[i] = strings.TrimSpace(domain)
+	}
 	var email = os.Getenv("ACME_EMAIL")
 	var token = os.Getenv("HEROKU_TOKEN")
 	var appName = os.Getenv("ACME_APP_NAME")
