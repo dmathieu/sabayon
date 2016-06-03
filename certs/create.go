@@ -50,7 +50,7 @@ func (c *Cert) Create() {
 	}
 	client.SetChallengeProvider(acme.HTTP01, challenge)
 
-	certificate, errs := client.ObtainCertificate(c.Domains, false, nil)
+	certificate, errs := client.ObtainCertificate(c.Domains, true, nil)
 	if len(errs) > 0 {
 		for _, e := range errs {
 			c.ErrChan <- e
