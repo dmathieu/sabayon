@@ -49,10 +49,10 @@ func main() {
 			log.Fatal(err)
 		}
 		now := time.Now()
-		m := now.AddDate(0, +1, 0)
+		renew := certExpiration.AddDate(0, -1, 0)
 
-		if certExpiration.After(m) {
-			log.Printf("cert.ignore_update expires_at=\"%s\" renew_at=\"%s\"", certExpiration, m)
+		if now.Before(renew) {
+			log.Printf("cert.ignore_update expires_at=\"%s\" renew_at=\"%s\"", certExpiration, renew)
 			return
 		}
 	}
