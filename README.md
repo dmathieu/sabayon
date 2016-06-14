@@ -72,7 +72,7 @@ YourAppName::Application.routes.draw do
 
   if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
     get ".well-known/acme-challenge/#{ ENV["ACME_TOKEN"] }" => proc { [200, {}, [ ENV["ACME_KEY"] ] ] }
-  else 
+  else
     ENV.each do |var, _|
       next unless var.start_with?("ACME_TOKEN_")
       number = var.sub(/ACME_TOKEN_/, '')
@@ -87,35 +87,37 @@ end
 
 Add the following rack middleware to your app:
 
-    class SabayonMiddleware
+```ruby
 
-        def initialize(app)
-          @app = app
-        end
+class SabayonMiddleware
+  def initialize(app)
+    @app = app
+  end
 
-        def call(env)
-          data = []
-          if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
-            data << {key: ENV['ACME_KEY'], token: ENV['ACME_TOKEN']}
-          else
-            ENV.each do |k, v|
-              if d = k.match(/^ACME_KEY_([0-9]+)/)
-              index = d[1]
-
-              data << {key: v, token: ENV["ACME_TOKEN_#{index}"]}
-            end
-          end
-
-          data.each do |e|
-            if env["PATH_INFO"] == "/.well-known/acme-challenge/#{e[:token]}"
-              return [200, {"Content-Type" => "text/plain"}, [e[:key]]]
-            end
-          end
-
-          @app.call(env)
+  def call(env)
+    data = []
+    if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
+      data << { key: ENV['ACME_KEY'], token: ENV['ACME_TOKEN'] }
+    else
+      ENV.each do |k, v|
+        if d = k.match(/^ACME_KEY_([0-9]+)/)
+          index = d[1]
+          data << { key: v, token: ENV["ACME_TOKEN_#{index}"] }
         end
       end
     end
+
+    data.each do |e|
+      if env["PATH_INFO"] == "/.well-known/acme-challenge/#{e[:token]}"
+        return [200, { "Content-Type" => "text/plain" }, [e[:key]]]
+      end
+    end
+
+    @app.call(env)
+  end
+end
+
+```
 
 ### Other HTTP implementations
 
