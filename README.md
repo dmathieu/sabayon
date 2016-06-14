@@ -9,7 +9,7 @@ Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku
 
 There are two parts to the setup:
 
-1. Your appplications setup
+1. Your application setup
 1. Creating a new sabayon app
 
 ## Configuring your application
@@ -130,8 +130,8 @@ In addition to configuring your application, you will also need to create
 a new Heroku application which will run sabayon to create and update
 the certificates for your main application.
 
-To easily create a new Heroku applicaiton with the sabayon code,
-Click on this deploy button and fill all the required config vars.
+To easily create a new Heroku application with the sabayon code,
+click on this deploy button and fill in all the required config vars.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
