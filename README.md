@@ -4,7 +4,6 @@ Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku
 
 ![architecture](architecture.png)
 
-
 ## Setup
 
 There are two parts to the setup:
@@ -116,6 +115,46 @@ class SabayonMiddleware
     @app.call(env)
   end
 end
+
+```
+
+### Go apps
+
+Add the following handler to your app:
+
+```go
+http.HandleFunc("/.well-known/acme-challenge/", func(w http.ResponseWriter, r *http.Request) {
+  pt := strings.TrimPrefix(r.URL.Path, "/.well-known/acme-challenge/")
+  rk := ""
+
+  k := os.Getenv("ACME_KEY")
+  t := os.Getenv("ACME_TOKEN")
+  if k != "" && t != "" {
+  	if pt == t {
+  		rk = k
+  	}
+  } else {
+  	for i := 1; ; i++ {
+  		is := strconv.Itoa(i)
+  		k = os.Getenv("ACME_KEY_" + is)
+  		t = os.Getenv("ACME_TOKEN_" + is)
+  		if k != "" && t != "" {
+  			if pt == t {
+  				rk = k
+  				break
+  			}
+  		} else {
+  			break
+  		}
+  	}
+  }
+
+  if rk != "" {
+  	fmt.Fprint(w, rk)
+  } else {
+  	http.NotFound(w, r)
+  }
+})
 
 ```
 
