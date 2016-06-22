@@ -164,27 +164,27 @@ Define the following route in your app.
 
 ```js
 app.get('/.well-known/acme-challenge/:acmeToken', function(req, res, next) {
-  var acmeToken = req.params.acmeToken
-  var key
+  var acmeToken = req.params.acmeToken;
+  var acmeKey;
 
   if (process.env.ACME_KEY && process.env.ACME_TOKEN) {
     if (acmeToken === process.env.ACME_TOKEN) {
-      key = process.env.ACME_KEY
+      acmeKey = process.env.ACME_KEY;
     }
   }
 
   for (var key in process.env) {
     if (key.startsWith('ACME_TOKEN_')) {
-      var num = key.split('ACME_TOKEN_')[1]
+      var num = key.split('ACME_TOKEN_')[1];
       if (acmeToken === process.env['ACME_TOKEN_' + num]) {
-        key = process.env['ACME_KEY_' + num]
+        acmeKey = process.env['ACME_KEY_' + num];
       }
     }
   }
 
-  if (key) res.send(key)
-  else res.status(404).send()
-})
+  if (key) res.send(acmeKey);
+  else res.status(404).send();
+});
 ```
 
 ### Other HTTP implementations
