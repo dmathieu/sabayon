@@ -182,7 +182,7 @@ app.get('/.well-known/acme-challenge/:acmeToken', function(req, res, next) {
     }
   }
 
-  if (key) res.send(acmeKey);
+  if (acmeKey) res.send(acmeKey);
   else res.status(404).send();
 });
 ```
