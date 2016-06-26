@@ -224,6 +224,10 @@ and add the following daily command to regenerate your certificate automatically
 
     sabayon
 
+### Update DNS
+
+After configuring and successfully running Sabayon, you'll likely need to change your DNS settings. Non-SSL apps usually use a `CNAME` or `ALIAS` pointing to `your-app-name.herokuapp.com`, while apps with `http-si` are accessible at `your-app-name.com.herokudns.com`. You should check your exact DNS target in your Heroku Dashboard under the Settings tab, within the Domains section. Look for "DNS Targets" under "Custom domains".
+
 ### Force-reload a certificate
 
 You can force-reload your app's certificate:
