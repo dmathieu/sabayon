@@ -8,8 +8,17 @@ Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku
 
 There are two parts to the setup:
 
+1. Activating Heroku's HTTP SNI
 1. Your application setup
 1. Creating a new sabayon app
+
+## Heroku's HTTP SNI
+
+This project relies on [Heroku's Free SSL](https://blog.heroku.com/archives/2016/5/18/announcing_heroku_free_ssl_beta_and_flexible_dyno_hours) offering.
+You need to enable the http-sni lab feature in your project.
+
+> heroku labs:enable http-sni
+
 
 ## Configuring your application
 
