@@ -6,11 +6,12 @@ Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku
 
 ## Setup
 
-There are two parts to the setup:
+There are four parts to the setup:
 
 1. Activating Heroku's HTTP SNI
-1. Your application setup
-1. Creating a new sabayon app
+2. Create OAuth authorization
+3. Your application setup
+4. Creating a new sabayon app
 
 ## Heroku's HTTP SNI
 
@@ -19,6 +20,24 @@ You need to enable the http-sni lab feature in your project.
 
 > heroku labs:enable http-sni
 
+## Create OAuth authorization
+
+The `heroku-oauth` toolbelt plugin can be used to create OAuth authorization.
+An access token will be generated for this authorization.
+This access token need to be registered as `HEROKU_TOKEN` variable when creating the sabayon app.
+
+```bash
+> heroku plugins:install heroku-cli-oauth
+> heroku authorizations:create -d "<description-you-want>"
+Created OAuth authorization.
+  ID:          <heroku-client-id>
+  Description: <description-you-want>
+  Scope:       global
+  Token:       <heroku-token>
+```
+
+You can retrieve authorizations informations later.
+More infos: `heroku authorizations --help`.
 
 ## Configuring your application
 
@@ -226,7 +245,7 @@ and add the following daily command to regenerate your certificate automatically
 
 ### Update DNS
 
-After configuring and successfully running Sabayon, you'll likely need to change your DNS settings. Non-SSL apps usually use a `CNAME` or `ALIAS` pointing to `your-app-name.herokuapp.com`, while apps with `http-si` are accessible at `your-app-name.com.herokudns.com`. You should check your exact DNS target in your Heroku Dashboard under the Settings tab, within the Domains section. Look for "DNS Targets" under "Custom domains".
+After configuring and successfully running Sabayon, you'll likely need to change your DNS settings. Non-SSL apps usually use a `CNAME` or `ALIAS` pointing to `your-app-name.herokuapp.com`, while apps with `http-sni` are accessible at `your-app-name.com.herokudns.com`. You should check your exact DNS target in your Heroku Dashboard under the Settings tab, within the Domains section. Look for "DNS Targets" under "Custom domains".
 
 ### Force-reload a certificate
 
