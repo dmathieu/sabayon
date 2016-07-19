@@ -215,6 +215,54 @@ app.get('/.well-known/acme-challenge/:acmeToken', function(req, res, next) {
 });
 ```
 
+### PHP Apps
+
+Add the following to `.well-known/acme-challenge/index.php`
+
+```php
+<?php
+$request = $_SERVER['REQUEST_URI'];
+if(preg_match('#^/.well-known/acme-challenge/#', $request) === 0) {
+    return;
+}
+
+$data = [];
+
+if(isset($_ENV['ACME_KEY']) && isset($_ENV['ACME_TOKEN'])) {
+    $data[] = [
+        'key' => $_ENV['ACME_KEY'],
+        'token' => $_ENV['ACME_TOKEN'],
+    ];
+} else {
+    foreach($_ENV as $key => $value) {
+        if(preg_match('#^ACME_TOKEN_([0-9]+)#', $key)) {
+            $number = str_replace('ACME_TOKEN_', '', $key);
+            $data[] = [
+                'key' => $_ENV['ACME_KEY_'.$number],
+                'token' => $_ENV['ACME_TOKEN_'.$number],
+            ];
+        }
+    }
+}
+
+foreach($data as $pair) {
+    if($pair['token'] == basename($request)) die($pair['key']);
+}
+```
+
+Add the following to `.well-known/acme-challenge/.htaccess`
+
+```
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /.well-known/acme-challenge/index.php [L]
+</IfModule>
+```
+
 ### Other HTTP implementations
 
 In any other language, you need to be able to respond to requests on the path `/.well-known/acme-challenge/$ACME_TOKEN`
