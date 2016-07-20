@@ -126,7 +126,7 @@ end
 Add the previous middleware in an accessible place of your application (such as `lib` if you're including that folder).
 Then make rails include that middleware before all others. In `config/application.rb`:
 
-``ruby
+```ruby
 config.middleware.insert_before 0, SabayonMiddleware
 ```
 
