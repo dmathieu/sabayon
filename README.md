@@ -85,31 +85,6 @@ Make that file executable:
 
 Commit this code then deploy your main app with those changes.
 
-### Rails Applications
-
-Add a route to handle the request. Based on [schneems](https://github.com/schneems)'s [codetriage](https://github.com/codetriage)
-[commit](https://github.com/codetriage/codetriage/blob/bf86f24afc017f4d90f42deab525c99b7969e99e/config/routes.rb#L5-L9).
-
-There is also a rack example next if you would rather handle this in rack or
-if you have a non-rails app.
-
-```ruby
-
-YourAppName::Application.routes.draw do
-
-  if ENV['ACME_KEY'] && ENV['ACME_TOKEN']
-    get ".well-known/acme-challenge/#{ ENV["ACME_TOKEN"] }" => proc { [200, {}, [ ENV["ACME_KEY"] ] ] }
-  else
-    ENV.each do |var, _|
-      next unless var.start_with?("ACME_TOKEN_")
-      number = var.sub(/ACME_TOKEN_/, '')
-      get ".well-known/acme-challenge/#{ ENV["ACME_TOKEN_#{number}"] }" => proc { [200, {}, [ ENV["ACME_KEY_#{number}"] ] ] }
-    end
-  end
-end
-
-```
-
 ### Ruby apps
 
 Add the following rack middleware to your app:
@@ -144,6 +119,15 @@ class SabayonMiddleware
   end
 end
 
+```
+
+### Rails apps
+
+Add the previous middleware in an accessible place of your application (such as `lib` if you're including that folder).
+Then make rails include that middleware before all others. In `config/application.rb`:
+
+``ruby
+config.middleware.insert_before 0, SabayonMiddleware
 ```
 
 ### Go apps
