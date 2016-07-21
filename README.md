@@ -72,12 +72,14 @@ Add a `bin/start` file to your app:
       end
     end
 
-    `mkdir -p dist/.well-known/acme-challenge`
+    result = `mkdir -p dist/.well-known/acme-challenge`
+    raise result unless $?.success?
     data.each do |e|
-      `echo #{e[:key]} > dist/.well-known/acme-challenge/#{e[:token]}`
+      result = `echo #{e[:key]} > dist/.well-known/acme-challenge/#{e[:token]}`
+      raise result unless $?.success?
     end
 
-    `bin/boot`
+    exec("bin/boot")
 
 Make that file executable:
 
