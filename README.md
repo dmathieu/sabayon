@@ -2,7 +2,7 @@
 
 Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku apps.
 
-![architecture](architecture.png)
+![architecture](docs/architecture.png)
 
 ## Setup
 
@@ -109,7 +109,7 @@ Visit the resources dashboard for the Sabayon app you created `https://dashboard
 
 Then click on "Heroku Scheduler" and add a job to run `bin/sabayon` daily.
 
-![](https://www.dropbox.com/s/s7fhsfxhjai0src/Screenshot%202016-07-21%2008.50.18.png?dl=1)
+![heroku scheduler](docs/scheduler.png)
 
 The command `bin/sabayon` will attempt to get a new cert when your existing certificiate expires (every 90 days) if the certificate is not close to expiring it will exit so it does not renew your certificiate every day.
 
