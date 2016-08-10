@@ -18,6 +18,7 @@ This project relies on [Heroku's Free SSL](https://blog.heroku.com/archives/2016
 You need to enable the http-sni lab feature in your project.
 
 > heroku labs:enable http-sni
+
 ## Set up Sabayon app
 
 Sabayon works by running a seperate app that will configure letsencrypt for your main app. To get started, clone this project locally and make a new Heroku app.
