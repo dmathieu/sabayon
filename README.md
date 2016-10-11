@@ -21,7 +21,9 @@ You need to enable the http-sni lab feature in your project.
 
 ## Set up Sabayon app
 
-Sabayon works by running a seperate app that will configure letsencrypt for your main app. To get started, clone this project locally and make a new Heroku app.
+Sabayon works by running a separate app that will configure letsencrypt for
+your main app. To get started, clone this project locally and make a new Heroku
+app.
 
 ```
 $ git clone https://github.com/dmathieu/sabayon.git
@@ -53,9 +55,9 @@ For example:
 $ heroku config:set ACME_APP_NAME=myapp -a letsencrypt-app-for-<name>
 ```
 
-This would be vaild for `http://myapp.herokuapp.com`.
+This would be valid for `http://myapp.herokuapp.com`.
 
-- `ACME_DOMAIN` This is a comma seperated list of domains for which you want certificates. Subdomains need different certificates.
+- `ACME_DOMAIN` This is a comma separated list of domains for which you want certificates. Subdomains need different certificates.
 
 For Example:
 
@@ -89,8 +91,8 @@ Created OAuth authorization.
   Token:       <heroku-token>
 ```
 
-You can retrieve authorizations informations later.
-More infos: `heroku authorizations --help`.
+You can retrieve authorizations information later.
+More info: `heroku authorizations --help`.
 
 Take the output of `token` and use it to set the `HEROKU_TOKEN` on your Sabayon app:
 
@@ -112,7 +114,7 @@ Then click on "Heroku Scheduler" and add a job to run `bin/sabayon` daily.
 
 ![heroku scheduler](docs/scheduler.png)
 
-The command `bin/sabayon` will attempt to get a new cert when your existing certificiate expires (every 90 days) if the certificate is not close to expiring it will exit so it does not renew your certificiate every day.
+The command `bin/sabayon` will attempt to get a new cert when your existing certificate expires (every 90 days) if the certificate is not close to expiring it will exit so it does not renew your certificiate every day.
 
 Once you configure your application you'll want to manually run `heroku run bin/sabayon -a letsencrypt-app-for-<name>` and watch the output to verify a certificate is created and registered correctly. This is covered after "configuring your application".
 
