@@ -209,8 +209,9 @@ Add the previous middleware in an accessible place of your application (such as 
 Then make rails include that middleware before all others. In `config/application.rb`:
 
 ```ruby
-config.middleware.insert_before 0, SabayonMiddleware
+config.middleware.insert_before 0, 'SabayonMiddleware'
 ```
+[More info](http://stackoverflow.com/questions/3428343/where-do-you-put-your-rack-middleware-files-and-requires) on loading middleware.
 
 ### Go apps
 
