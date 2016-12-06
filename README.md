@@ -15,9 +15,6 @@ There are three parts to the setup:
 ## Heroku's HTTP SNI
 
 This project relies on [Heroku's Free SSL](https://blog.heroku.com/archives/2016/5/18/announcing_heroku_free_ssl_beta_and_flexible_dyno_hours) offering.
-You need to enable the http-sni lab feature in your project.
-
-> heroku labs:enable http-sni
 
 ## Set up Sabayon app
 
