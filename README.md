@@ -24,7 +24,7 @@ app.
 
 ```
 $ git clone https://github.com/dmathieu/sabayon.git
-$ cd sabyayon
+$ cd sabayon
 $ heroku create letsencrypt-app-for-<name>
 ```
 
