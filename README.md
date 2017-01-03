@@ -359,7 +359,7 @@ import os
 from django.http import HttpResponse, Http404
 
 
-def acme(request, token):
+def acme_challenge(request, token):
     def find_key(token):
         if token == os.environ.get("ACME_TOKEN"):
             return os.environ.get("ACME_KEY")
@@ -376,9 +376,12 @@ def acme(request, token):
 urls.py:
 
 ```
+from . import views
+
+
 urlpatterns = [
     # ...
-    url(r'.well-known/acme-challenge/(?P<token>.+)', views.acme),
+    url(r'.well-known/acme-challenge/(?P<token>.+)', views.acme_challenge),
 ]
 ```
 
