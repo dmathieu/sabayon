@@ -385,6 +385,38 @@ urlpatterns = [
 ]
 ```
 
+### Elixir (Phoenix)
+
+in router.ex:
+
+```
+get "/.well-known/acme-challenge/:token", App.ACME, :acme_challenge
+```
+
+acme.ex:
+
+```
+defmodule App.ACME do
+  use App.Web, :controller
+
+  def acme_challenge(conn, %{ "token" => token }) do
+    case find_key_for_token(token) do
+      nil -> send_resp conn, :not_found, ""
+      key -> text conn, key
+    end
+  end
+
+  @spec find_key_for_token(String.t) :: String.t | nil
+  defp find_key_for_token(token) do
+    System.get_env
+    |> Map.keys
+    |> Enum.find("", fn(e) -> System.get_env(e) === token end)
+    |> (&Regex.replace(~r/TOKEN/, &1, "KEY")).()
+    |> System.get_env
+  end
+end
+```
+
 ### Other HTTP implementations
 
 In any other language, you need to be able to respond to requests on the path `/.well-known/acme-challenge/$ACME_TOKEN`
