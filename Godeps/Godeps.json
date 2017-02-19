@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/dmathieu/sabayon",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v60",
+	"GodepVersion": "v79",
 	"Packages": [
 		"./..."
 	],
@@ -35,8 +35,8 @@
 		},
 		{
 			"ImportPath": "github.com/xenolf/lego/acme",
-			"Comment": "v0.3.0-34-gca19a90",
-			"Rev": "ca19a90028e242e878585941c2a27c8f3b3efc25"
+			"Comment": "v0.3.1-109-g6cac0ea",
+			"Rev": "6cac0ea7d8b28c889f709ec7fa92e92b82f490dd"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ocsp",
