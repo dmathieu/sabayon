@@ -1,0 +1,55 @@
+{
+	"comment": "",
+	"ignore": "test",
+    "heroku": {
+      "goVersion": "go1.8",
+        "install": [
+          "./..."
+        ]
+    },
+	"package": [
+		{
+			"checksumSHA1": "KpXuLb/p/ELfUXczZU6ZDP2+5bY=",
+			"path": "github.com/miekg/dns",
+			"revision": "75229eecb7af00b2736e93b779a78429dcb19472",
+			"revisionTime": "2017-02-17T12:10:30Z"
+		},
+		{
+			"checksumSHA1": "O4hTegdRqGvRyHB5Q1VKDM52afk=",
+			"path": "github.com/xenolf/lego/acme",
+			"revision": "6cac0ea7d8b28c889f709ec7fa92e92b82f490dd",
+			"revisionTime": "2017-02-19T04:51:39Z"
+		},
+		{
+			"checksumSHA1": "UlBPMaKC4dO/9ge7wJfDtptVoVo=",
+			"path": "golang.org/x/crypto/ocsp",
+			"revision": "453249f01cfeb54c3d549ddb75ff152ca243f9d8",
+			"revisionTime": "2017-02-08T20:51:15Z"
+		},
+		{
+			"checksumSHA1": "kEO69MIsqWDxBOIs3ez1faofNSg=",
+			"path": "golang.org/x/net/publicsuffix",
+			"revision": "6b27048ae5e6ad1ef927e72e437531493de612fe",
+			"revisionTime": "2017-02-17T08:49:01Z"
+		},
+		{
+			"checksumSHA1": "4FonadPMjBW33hDoyy+ZtBmU/bc=",
+			"path": "gopkg.in/square/go-jose.v1",
+			"revision": "aa2e30fdd1fe9dd3394119af66451ae790d50e0d",
+			"revisionTime": "2016-09-23T00:08:11Z"
+		},
+		{
+			"checksumSHA1": "vSlztt3rfYwwDDKEiqUDWXl2LGw=",
+			"path": "gopkg.in/square/go-jose.v1/cipher",
+			"revision": "aa2e30fdd1fe9dd3394119af66451ae790d50e0d",
+			"revisionTime": "2016-09-23T00:08:11Z"
+		},
+		{
+			"checksumSHA1": "UYvcpB3og7YJHbRu4feZFxXAU/A=",
+			"path": "gopkg.in/square/go-jose.v1/json",
+			"revision": "aa2e30fdd1fe9dd3394119af66451ae790d50e0d",
+			"revisionTime": "2016-09-23T00:08:11Z"
+		}
+	],
+	"rootPath": "github.com/dmathieu/sabayon"
+}

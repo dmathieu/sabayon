@@ -10,12 +10,9 @@ import (
 
 	"github.com/dmathieu/sabayon/certs"
 	"github.com/dmathieu/sabayon/heroku"
-	"github.com/joho/godotenv"
 )
 
 func main() {
-	godotenv.Load()
-
 	var force bool
 	flag.BoolVar(&force, "force", false, "Force updating the certificate even if it's not about to expire")
 	flag.Parse()
