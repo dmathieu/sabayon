@@ -327,6 +327,25 @@ RewriteRule . /.well-known/acme-challenge/index.php [L]
 </IfModule>
 ```
 
+If you use Nginx add this to your `nginx.conf`
+
+```
+location ^~ /.well-known/acme-challenge/ {
+    allow all;
+    # try to serve file directly, fallback to rewrite
+    try_files $uri @rewriteacme;
+}
+
+location @rewriteacme {
+    rewrite ^(.*)$ /.well-known/acme-challenge/index.php/$1 last;
+}
+
+location ^~ /.well-known/acme-challenge/index.php {
+    try_files @heroku-fcgi @heroku-fcgi;
+    internal;
+}
+```
+
 ### Python (Flask)
 
 Add the following route:
