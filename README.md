@@ -314,6 +314,8 @@ foreach($data as $pair) {
 }
 ```
 
+#### Apache
+
 Add the following to `.well-known/acme-challenge/.htaccess`
 
 ```
@@ -327,7 +329,9 @@ RewriteRule . /.well-known/acme-challenge/index.php [L]
 </IfModule>
 ```
 
-If you use Nginx add this to your `nginx.conf`
+#### Nginx
+
+Add this to your `nginx.conf`
 
 ```
 location ^~ /.well-known/acme-challenge/ {
