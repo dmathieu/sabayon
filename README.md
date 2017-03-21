@@ -1,6 +1,9 @@
-# Sabayon
+# Sabayon DEPRECATED. DO NOT USE.
 
 Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku apps.
+
+**This tool is deprecated, and will not receive further changes.**  
+Heroku now provides [automated certificate management with letsencrypt](https://devcenter.heroku.com/articles/automated-certificate-management).
 
 ![architecture](docs/architecture.png)
 
