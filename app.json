@@ -1,8 +1,8 @@
 {
   "name": "Sabayon",
-  "description": "Automated generation and renewal of ACME/Letsencrypt SSL certificates for Heroku apps.",
-  "website": "https://github.com/dmathieu/sabayon",
-  "repository": "https://github.com/dmathieu/sabayon",
+  "description": "DEPRECATED AND NOT MAINTAINED. DO NOT USE. SEE URL FOR BETTER SOLUTION",
+  "website": "https://devcenter.heroku.com/articles/automated-certificate-management",
+  "repository": "https://devcenter.heroku.com/articles/automated-certificate-management",
   "env": {
     "ACME_DOMAIN": {
       "description": "The domains, separated by a comma you wish to generate the certificate for"
